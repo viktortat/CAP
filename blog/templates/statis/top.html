@@ -1,0 +1,28 @@
+{% extends 'statis/base.html' %}
+
+{% block content %}
+<div>
+	<a href=""></a>
+	<p></p>          
+	
+        <div>
+			 <table class="table table-striped">
+				<tbody>
+					<tr>
+						<th></th>
+						<th class="userinfo_table">TOP 100 пользователей по рейтингу</th>
+						<th></th>
+					</tr>
+					{% for top in topuser %}
+					<tr>
+						<td>{{ top.user_id }}</td>
+						<td><a href="/profuser/{{top.user.id}}">{{ top.user }}</a></td>
+						<td>{{ top.rating }}</td>
+					</tr>
+					 {% endfor %}
+				</tbody>
+			</table>
+        </div>
+   
+        </div>
+{% endblock %}

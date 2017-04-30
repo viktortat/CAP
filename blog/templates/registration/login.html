@@ -1,0 +1,18 @@
+{% extends 'registration/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+{% if request.user.is_authenticated %}Привет, 
+{{ user }}
+{% endif %}
+{% if user.is_anonymous%}
+
+    <form method="post" action=".">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+		{% bootstrap_button "Войти" button_type="submit" button_class="btn-primary" %}
+        <input type="hidden" name="next" value="{{ next }}" />
+		
+        </form>
+    <p>Нет аккаунта? <a href="{# url 'registration_register' #}">Регистрация</a>!</p>
+{% endif %}
+{% endblock %}

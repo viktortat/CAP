@@ -1,0 +1,17 @@
+{% extends 'profuser/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+ 
+<div>
+	<a href="{%url 'mytask'%}">Назад</a>
+	
+	<form   method="post" action="">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+		{% buttons %}
+		{% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+		{% endbuttons %}
+    </form>
+	
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'serfing/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+<div>
+	<p>Моя реклама (ссылки):</p>
+	{% for message in messages %}
+      <h4 class="list-group-item-danger">{{ message }}</h4>
+    {% endfor %}
+	{%for serf in myserf%}	
+	<table class="table table-striped">	
+		<strong>{{serf.title}}</strong><br>
+		{% if serf.com %}
+			<p>{{serf.com}}</p>
+		{% endif %}
+		<small>№ {{serf.id}} | Вознаграждение: {{serf.price}} руб. | </small>
+		<small>Цена ссылки: {{serf.price_t}} руб. | </small>
+		<small>Просмотров: {{serf.prosm}} | </small>
+		<small>Осталось: {{serf.prosm_ost}}</small>
+		<tr>	
+			<td>
+				{% if serf.moder == 0 and serf.odobren == 0 %}
+					<a href="{% url 'moder_serf' pk=serf.pk %}">{% bootstrap_button "Отправить на модерацию" button_type="submit" name="1" button_class="btn-primary btn-xs" %}</a><br><br>
+				{% endif %}
+				
+				{% if serf.moder == 0 and serf.odobren == 1 %}
+					<a href="{% url 'moder_serf' pk=serf.pk %}">{% bootstrap_button "Отправить на модерацию" button_type="submit" name="1" button_class="btn-primary btn-xs" %}</a><br><br>
+				{% endif %}
+				
+				{% if serf.moder == 1 and serf.odobren == 0 %}
+					Ссылка на модерации<br>
+				{% endif %}
+
+				{% if serf.moder == 1 and serf.odobren == 1 %}
+					<strong>Ссылка одобрена</strong><br>
+				{% endif %}
+				<a href="{% url 'edit_serf' pk=serf.pk %}">{% bootstrap_button "Редактировать" button_type="submit" name="1" button_class="btn-primary btn-xs" %}</a>&nbsp &nbsp
+				<a href="{% url 'delete_serf' pk=serf.pk %}">{% bootstrap_button "Удалить" button_type="submit" name="1" button_class="btn-danger btn-xs" %}</a>
+			</td>
+			<td>
+				{% if serf.price_serf < 1 %}
+					<small>Ссылка не активна, пополните баланс</small><br>
+				{% endif %}
+				
+				{% if serf.pausa == 0 %}
+					<small>Ссылка активна</small><br>
+					<a href="{% url 'pausa_serf' pk=serf.pk %}">{% bootstrap_button "Остановить" button_type="submit" name="1" button_class="btn-warning btn-xs" %}</a>
+				{% endif %}
+				
+				{% if serf.pausa == 1 %}
+					<small>Ссылка не активна</small><br>
+					<a href="{% url 'start_serf' pk=serf.pk %}">{% bootstrap_button "Запустить" button_type="submit" name="1" button_class="btn-success btn-xs" %}</a>
+				{% endif %}
+			</td>
+			<td>
+				Баланс ссылки - {{serf.price_serf}} руб.<br>
+					<a href="{% url 'popolnit_serf' pk=serf.pk %}">{% bootstrap_button "Пополнить" button_type="submit" name="1" button_class="btn-primary btn-xs" %}</a>
+		     </td>
+		</tr>	
+	
+	</table>	
+	{%endfor%}
+</div>
+{% endblock %}

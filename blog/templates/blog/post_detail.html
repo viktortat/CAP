@@ -1,0 +1,41 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap3 %}
+{% block title %}{{ post.title }} | WMR-LOVE - система активной рекламы, лучшее место для заработка{% endblock %}
+{% block content-title %}{{ post.title }}{% endblock %}
+{% block content %}
+    <div class="post">
+        {% if post.published_date %}
+            <div class="date">
+                {{ post.published_date }}
+            </div>
+        {% endif %}			
+        <p>{{ post.text|linebreaksbr }}</p>
+		<hr>
+		{% if comm_s%}
+			<h4>Коментарии</h4>
+			{% for comm in comm_s%}
+			<div class="comm">
+				<div class="comm_author">
+					{{ comm.author}} <br>
+					{{ comm.pub_date|date:"j.m.y H:i" }}
+				</div>
+				<div class="comm_text">
+					{{ comm.comment_text}}
+				</div>
+			</div>
+			{% endfor %}
+		{% else %}
+			<h5>Нет коментариев</h5>
+		{% endif %}
+		<hr>
+		{% if user.is_active %}
+		<p><form   method="post" action="">
+			{% csrf_token %}
+			{% bootstrap_form form %}
+			{% buttons %} 
+				{% bootstrap_button "Отправить" button_type="submit" button_class="btn-primary" %}			
+			{% endbuttons %}
+		</form></p>
+		{% endif %}
+    </div>
+{% endblock %}

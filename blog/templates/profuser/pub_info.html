@@ -1,0 +1,83 @@
+{% extends 'profuser/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+<div>
+	{% if error %}
+		<h4>{{error}}</h4>
+	{% endif %}
+		<p><form   method="post" action="">
+        {% csrf_token %}
+		<div style="width: 50%; float: left;">
+        {% bootstrap_form form %}
+		</div>
+		<div style="width: 45%; float: right; padding-top: 25px;">
+		{% buttons %}
+		{% bootstrap_button "Найти" button_type="submit" button_class="btn-primary" %}
+		{% endbuttons %}
+		</div>
+    </form> </p>         
+	{% for info in userinfo %}
+        <div>
+			 <table class="table table-striped">
+				<tbody>
+					<tr>
+						<th class="userinfo_table">{{ info.user|linebreaksbr }}</th>
+						{% if refery == 0 and info.user_id != useri and referal != useri and referal_two != useri%}
+							<th><a href="{% url 'iref' pk=info.user_id %}">Стать рефералом</a></th>
+						{% endif %}	
+						{% if refery == info.user_id %}
+							<th>Ваш реферер</th>
+						{% endif %}	
+						{% if referal == useri or referal_two == useri %}
+							<th>Ваш реферал</th>
+						{% endif %}	
+					</tr>
+					<tr>
+						<td>ID</td>
+						<td>{{ info.user_id }}</td>
+					</tr>
+					<tr>
+						<td>Рейтинг</td>
+						<td>{{ info.rating }}</td>
+					</tr>
+					<tr>
+						<td>Реферер</td>
+						<td>
+							{% if ref == 0 %} 
+								Без реферера 						
+							{% else %}
+								<a href="/profuser/{{ref.id}}">{{ ref.user }}</a>
+							{% endif %}
+						</td>
+					</tr>
+					<tr>
+					<tr>
+						<td>Дата регистрации</td>
+						<td>{{ info.user.date_joined }}</td>
+					</tr>
+					<tr>
+						<td>Имя </td>
+						<td>{{ info.nick|linebreaksbr }}</td>
+					</tr>
+					<tr>
+						<td>Род деятельности</td>
+						<td> {{info.get_work_display}}</td>
+					</tr>
+						<td>Семейное положение</td>
+						<td>{{ info.get_family_display }}</td>
+					</tr>
+					<tr>
+						<td>Пол</td>
+						<td>{{ info.get_sex_display }}</td>
+					</tr>
+					<tr>
+						<td>Год рождения</td>
+						<td>{{ info.birth }}</td>
+					</tr>
+					<tr>
+				</tbody>
+			</table>
+        </div>
+    {% endfor %}
+        </div>
+{% endblock %}

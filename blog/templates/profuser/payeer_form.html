@@ -1,0 +1,21 @@
+{% extends 'profuser/base.html' %}
+{% load bootstrap3 %}
+{% block content-title %}
+Пополнение рекламного счета
+{% endblock %}
+{% block content %}    
+    <h5>Сумма пополнения {{money}} руб.</h5>
+    <form method="post" action="https://payeer.com/merchant/">
+        <input type="hidden" name="m_shop" value="297863614">
+        <input type="hidden" name="m_orderid" value="{{user}}">
+        <input type="hidden" name="m_amount" value="{{money}}">
+        <input type="hidden" name="m_curr" value="RUB">
+        <input type="hidden" name="m_desc" value="{{ description }}">
+        <input type="hidden" name="m_sign" value="{{ sing }}">
+        <input type="hidden" name="form[ps]" value="2609">
+        <input type="hidden" name="form[curr[2609]]" value="RUB">
+        {% buttons %} 
+            {% bootstrap_button "Пополнить" button_type="submit" button_class="btn-primary" %}
+        {% endbuttons %}
+    </form>
+{% endblock %}

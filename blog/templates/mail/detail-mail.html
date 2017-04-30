@@ -1,0 +1,28 @@
+{% extends 'mail/base.html' %}
+{% load bootstrap3 %}
+{% block title %}
+    {% block blog_title %}{% endblock %}
+{% endblock %}
+
+{% block content-title %}
+	Cообщение
+{% endblock %}
+
+{% block content %}
+	{% if mail %}
+		{# for m in mail#}
+		<h4>{{mail.title}}</h4>
+		<p>От кого: <a href="/profuser/{{send.id}}">{{mail.sender }}</a> | Дата: {{mail.pub_date|date:"j.m.y H:i"}}</p><hr>		
+		<p>{{mail.text}}</p><hr>
+		<form   method="post" action="">
+			{% csrf_token %}
+			{% buttons %}
+			{% bootstrap_button "Удалить" button_type="submit" button_class="btn-primary" %}
+			{% endbuttons %}
+		</form>		
+	{#endfor#}
+	{% else %}
+		<h5>Сообщений нет</h5>	
+	{% endif %}
+
+{% endblock %}

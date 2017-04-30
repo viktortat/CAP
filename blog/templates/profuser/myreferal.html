@@ -1,0 +1,30 @@
+{% extends 'profuser/base.html' %}
+{% block content-title %}
+Мои рефералы
+{% endblock %}
+{% block content %}
+        <div>
+			 <table class="table table-striped">
+				<tbody>
+					<tr>
+						<th class="userinfo_table">1-й уровень - {{name.one_lvl}} </th>
+						<th>2-й уровень - {{name.two_lvl}}</th>
+					</tr>
+				</tbody>
+			</table>	
+				<div class="myref">
+					<div class="ref-one">
+						{% for ref in referal_one %}
+							<p><a href="/profuser/{{ref.user.id}}">{{ref.user}}</a></p>
+						{% endfor %}						
+					</div>
+				
+					<div class="ref-two">
+						{% for ref2 in referal_two %}					
+							<p><a href="/profuser/{{ref2.user.id}}">{{ ref2.user }}</a></p>					
+						{% endfor %}	
+					</div>
+				</div>
+        </div>
+
+{% endblock %}

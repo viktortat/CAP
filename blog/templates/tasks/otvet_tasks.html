@@ -1,0 +1,30 @@
+{% extends 'tasks/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+<div>
+	<p>Ваши задания. Здесь Вы можете проверить ответы на задания.</p>
+	{% for message in messages %}
+      <h4 class="list-group-item-danger">{{ message }}</h4>
+    {% endfor %}
+	<table class="table table-striped">
+	{%for task in otvet%}
+		<tr>
+			<td><strong><a href="/profuser/{{task.otvet_user.id}}">{{task.otvet_user}}</a></strong></td>			
+			<td><a href="{% url 'otvet_detail' pk=task.id %}">{% bootstrap_button "Проверить" button_type="submit" name="1" button_class="btn-primary btn-xs" %}</a><br>
+			<td><a href="{% url 'otvet_delete' pk=task.id %}">{% bootstrap_button "Удалить" button_type="submit" name="1" button_class="btn-danger btn-xs" %}</a>
+			<td>
+			{% if task.odobren == 0 %}
+				<small>Не подтвержден</small>
+			{%endif%}
+			
+			{% if task.odobren == 1%}
+				<small>Подтвержден</small>
+			{%endif%}
+			
+			</td>
+
+		</tr>			
+	{%endfor%}
+	</table>	
+</div>
+{% endblock %}

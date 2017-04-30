@@ -1,0 +1,15 @@
+{% extends 'serfing/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+
+	<a href="{%url 'myserf'%}">Назад</a>
+	
+	<form   method="post" action="">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+		{% buttons %}
+		{% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+		{% endbuttons %}
+    </form>
+
+{% endblock %}

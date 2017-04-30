@@ -1,0 +1,109 @@
+{% extends 'profuser/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+<div>
+	{% if error %}
+		<h4>{{error}}</h4>
+	{% endif %}
+	<p><form   method="post" action="">
+        {% csrf_token %}
+		<div style="width: 50%; float: left;">
+        {% bootstrap_form form %}
+		</div>
+		<div style="width: 45%; float: right; padding-top: 25px;">
+		{% buttons %}
+		{% bootstrap_button "Найти" button_type="submit" button_class="btn-primary" %}
+		{% endbuttons %}
+		</div>
+    </form> </p>
+	<p><a href="{% url 'editinfo' pk=user.id %}">{% bootstrap_button "Редактировать профиль" button_type="submit" button_class="btn-xs   btn-primary" %}</a></p>
+       
+	{% for info in userinfo %}
+        <div>
+			 <table class="table table-striped">
+				<tbody>
+					<tr>
+						<th class="userinfo_table">Персональная информация</th>
+						<th>	</th>
+					</tr>
+					<tr>
+						<td>Мой id</td>
+						<td>{{ info.user_id }}</td>
+					</tr>
+					<tr>
+						<td>Мой реферер</td>
+						<td>							
+							{% if ref == 0 %} 
+								Без реферера 						
+							{% else %}
+								<a href="/profuser/{{ref.id}}">{{ ref.user }}</a>
+							{% endif %}
+							</td>
+					</tr>
+					<tr>
+						<td>Мой рейтинг</td>
+						<td>{{ info.rating }}</td>
+					</tr>
+					<tr>
+						<td>Мой статус</td>
+						<td>{{ info.status }}</td>
+					</tr>
+					<tr>
+						<td>Телефон</td>
+						<td>{{ info.phone }}</td>
+					</tr>
+						<td>Моё имя </td>
+						<td>{{ info.nick|linebreaksbr }}</td>
+					</tr>
+					<tr>
+						<td>Мой род деятельности</td>
+						<td> 
+						{{info.get_work_display}}
+
+						</td>
+					</tr>
+						<td>Моё семейное положение</td>
+						<td>{{ info.get_family_display }}</td>
+					</tr>
+					<tr>
+						<td>Мой пол</td>
+						<td>{{ info.get_sex_display }}</td>
+					</tr>
+					<tr>
+						<td>Мой год рождения</td>
+						<td>{{ info.birth }}</td>
+					</tr>
+					<tr>
+						<td>Дата регистрации</td>
+						<td>{{ info.user.date_joined  }}</td>
+					</tr>
+					<tr>
+						<th class="userinfo_table">Платёжные реквизиты</th>
+						<th></th>
+					</tr>
+					<tr>
+						<td>Номер счёта WMR WebMoney</td>
+						<td>{{ info.wmr}}</td>
+					</tr>
+					<tr>
+						<td>Номер счёта Яндекс.деньги</td>
+						<td>{{ info.yandex}}</td>
+					</tr>
+					<tr>
+						<td>Номер счёта Qiwi</td>
+						<td>{{ info.qiwi}}</td>
+					</tr>
+					<tr>
+						<td>Номер счёта Perfect Money</td>
+						<td>{{ info.perfect_money}}</td>
+					</tr>					
+					<tr>
+						<td>Номер счёта Payeer</td>
+						<td>{{ info.payeer}}</td>
+					</tr>
+				</tbody>
+			</table>
+        </div>
+    {% endfor %}
+        </div>
+{% endblock %}

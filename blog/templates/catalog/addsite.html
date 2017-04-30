@@ -1,0 +1,25 @@
+{% extends 'catalog/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+ 
+<div>
+	<a href="{%url 'siteall'%}">Назад</a>
+	<p>Основой продвижения вашего сайта в поисковых системах являются важные показатели ТиЦ (Яндекс) и PageRank (Google). Лучшим способом наращивания этих показателей является размещение статической ссылки вашего ресурса на сайтах, которые уже имеют солидный показатель. Поэтому размещение вашей статической ссылки в нашем каталоге — идеальное решение! В данный момент показатели WMR-LOVE ТиЦ = 0, а PageRank = 0.</p><hr> 
+	<p>Стоимость размещения ссылки <strong>20.00 рублей / сутки</strong></p><hr> 
+	{%if messages %}
+	{% for message in messages %}
+      <h4 class="list-group-item-danger">{{ message }}</h4>
+    {% endfor %}
+	{%endif%}
+	<form   method="post" action="">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+		{% buttons %}
+		<p><a href="/pravila/" target="_blank">Прочтите правила (ссылка откроется в новом окне)</a></p>
+		{% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+		{% endbuttons %}
+    </form>
+	
+</div>
+{% endblock %}
+

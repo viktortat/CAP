@@ -1,0 +1,32 @@
+{% extends 'djreg/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+{% if user.is_active %}
+Вы заригестрированы.
+ <form id="user_form" method="post" action="/profil/">
+
+            {% csrf_token %}
+
+            {% bootstrap_form form %}
+
+            {% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+        </form>
+{% else %}
+{% if registered %}
+       
+        <a href="/">На главную</a><br />
+        {% else %}
+        <strong>Добро пожаловать!</strong><br />
+
+        <form id="user_form" method="post" action="/register/"
+                enctype="multipart/form-data">
+
+            {% csrf_token %}
+			{% bootstrap_form user_form %}
+
+            {% bootstrap_form profile_form %}
+		{% bootstrap_button "Регистрация" button_type="submit" button_class="btn-primary" %}
+        </form>
+{% endif %}
+{% endif %}
+{% endblock %}

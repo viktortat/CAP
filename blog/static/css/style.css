@@ -1,0 +1,296 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+body{
+	background: #f2f0e3 url(../images/back.jpg) repeat-x;
+	margin: 0 auto;
+    /*width: 1000px;*/
+    margin-bottom: 60px;
+}
+h1, h2, h3, h4, h5{
+	text-align: center;
+}
+/*Шапка*/
+.header{
+	height: 125px;
+}
+.logo{
+	margin: 20px 30px 20px 30px;
+	float: left;
+}
+.logo-img{
+	margin: -15px 0 10px 0;
+}
+.deviz{
+	color: #fff;
+	font-size: 20px;
+	font-style: italic;
+	margin: -20px 0 0 10px
+}
+.p-stat-header{
+	margin: 0;
+}
+.stat-left{
+	float: left;
+	margin: 0 10px 0 0;
+}
+.stat-header {
+    width: 400px;
+    float: right;
+    border: 1px solid #000;
+    border-radius: 10px;
+    background: #eca31f;
+    padding: 5px;
+    margin: 10px 25px 0 0;
+}
+/*Меню*/
+.main-menu {
+    background: #FAA53A;
+    /* height: 20px; */
+    margin: 0 0 10px 0;
+    box-shadow: 0 1px 5px 0 #555;
+}
+.nav>li>a:focus, .nav>li>a:hover, .nav>li>a:active{
+	background: #D48624 !important;
+}
+.main-menu li a{
+	color: #000;
+}
+
+/*Левый сайдбар*/
+.left-side{
+	width: 20%;
+	float: left;
+	background-color: #fff;
+}
+.header-side{
+	background: #71B7FD;
+	text-align: center;
+	color: #fff;
+	border-bottom: 3px solid #FAA53A;
+}
+.menu-left{
+	padding: 5px 10px !important;
+}
+.menu-left:hover {
+    color: #fff !important;
+    text-decoration: none !important;
+    background-color: #FAA53A !important;
+}
+.avat {
+    width: 170px;
+    height: 100px;
+    text-align: center;
+}
+.avata{
+    width: 100px;
+    height: 100px;
+}
+/*Контент*/
+.main {
+    width: 57%;
+    float: left;
+    margin: 0 10px 10px 10px;
+    box-shadow: 0 0 10px 0 #ccc;
+    padding: 10px;
+	background: #fff;
+}
+.title-post {
+    text-align: center;
+    margin-top: -25px;
+    font-size: 15px;
+}
+.opis_tasks {
+    text-align: center;
+    font-size: 15px;
+    border-bottom: 3px solid #FAA53A;
+	color: #fff;
+    padding: 2px;
+    background-color: #71B7FD;
+}
+.mesg_tasks {
+    text-align: center;
+    font-size: 15px;
+	color: #fff;
+    padding: 2px;
+    background-color: #FAA53A;
+}
+.quest {
+    border: 1px dashed #f0ad4e;
+    padding: 5px;
+    background-color: rgba(113, 183, 253, 0.45);
+}
+.quest_ans{
+	padding: 0 0 0 15px;
+}
+.userinfo_table{
+	text-align: center;
+}
+.serf-frame{
+	height: 10%;
+}
+.img-sys{
+	width: 161px;
+    margin: 5px 5px 5px 5px;
+    height: 47px;
+    box-shadow: 1px 1px 5px 2px;
+}
+.myref{
+	width: 100%;
+}
+.ref-one {
+    float: left;
+    width: 50%;
+    padding-left: 15%;
+}
+.ref-two {
+    padding-left: 52%;
+}
+.reflink {
+    color: #1C8619;
+    font-size: 14px;
+    text-align: center;
+    background-color: #F7F7DF;
+    border: solid 1px #006291;
+    display: block;
+    padding: 5px;
+    margin: 5px auto;
+}
+/*Письма*/
+.btn-pismo{
+    min-width: 100px;
+    border: 1px solid #000;
+    box-shadow: 0px 2px 1px 0px #999;
+}
+.p-otv-pismo{
+	text-align: center; 
+	background-color: #71B7FD; 
+	color: #fff
+}
+.p-otv-quest{
+	padding: 5px; 
+	background-color: #eee;
+}
+.mess-div{
+	position: fixed;
+	display: none;
+	z-index: 20;
+	width: 300px;
+	height: 100px;
+	background-color: #fff;
+	border: 1px solid red;
+	margin: 0 0 0 10%;
+}
+.date-stat-user{
+    width: 100%;
+    height: 10px;
+    margin: 0 0 10px 0;
+	padding: 0 0 0 60px;
+}
+.stat-user-div{
+	float: left;
+	margin: 0 0 0 15px;
+}
+.st{
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    height: 20px;
+}
+.stat-user-serf{
+	float: left;
+	width: 55px;
+}
+.stat-user-math{
+    float: left;
+    width: 80px;
+    text-align: center;
+    /* padding: 0 0 0 15px; */
+}
+.stat-user-h5{
+    color: #fff;
+    background-color: #71B7FD;
+    height: 25px;
+    line-height: 25px;
+}
+/*Правый сайдбар*/
+.right-side{
+	width: 20%;
+	float: right;
+	background-color: #fff;
+}
+.profil{
+    padding: 10px;	
+}
+.rek-schet {
+    text-align: center;
+    background-color: #71B7FD;
+    font-size: 16px;
+    color: #fff;
+    box-shadow: 0 2px 4px 1px #9d9d9d;
+    padding-bottom: 5px;
+}
+.form-otv-pismo{
+	text-align: center;
+}
+.url-otv-pismo{
+	text-align: center; 
+	color: #89A688;
+}
+/*Футер*/
+.footer {
+    margin: 25px 25px 0 25px;
+    height: 50px;
+    background-color: #71B7FD;
+    padding: 15px;
+    /*position: absolute;*/
+    bottom: 0;
+    width: 97%;
+}
+
+.right-footer{
+	float: right;
+	color: #fff;
+}
+.a-footer{
+	color: #fff;
+}
+
+/*Медиа*/
+@media (max-width: 992px){
+.left-side, .right-side {
+    width: 100%;
+    float: left;
+    margin: 0 5px 10px 0;
+}
+
+.main {
+    width: 98%;
+	margin: 0;
+}
+
+.logo {
+    margin: 20px 0 20px 0;
+    float: left;
+}
+
+.stat-header {
+    width: 100%;
+    float: left;
+    /* margin: 10px 25px 0 0; */
+}
+
+
+
+.footer {
+    margin: 25px 0 0 0;
+    width: 100%;
+}
+}
+
+@media (max-width: 750){
+	.nav-justified>li {
+    float: left !important;
+}
+	
+}

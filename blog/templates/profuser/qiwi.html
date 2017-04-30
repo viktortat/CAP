@@ -1,0 +1,28 @@
+{% extends 'profuser/base.html' %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block content-title %}
+Запрос на вывод средств
+{% endblock %}
+{% block content %}
+ 
+<div>
+	<p>У вас уже накопилась достаточная для снятия сумма? Поздравляем! Ввидите сумму для вывода.</p>
+	{% for message in messages %}
+      <h4 class="list-group-item-danger">{{ message }}</h4>
+    {% endfor %}
+
+	<table class="table table-striped">
+		<tr>			
+			<td>
+		<form   method="post" action="">
+			{% csrf_token %}
+			{% bootstrap_form form %}
+			{% buttons %} 
+				<img src="{% static 'images/qiwi.png' %}">{% bootstrap_button "Вывести" button_type="submit" button_class="btn-primary" %}			
+			{% endbuttons %}
+		</form>
+			</td>
+	</table>
+</div>
+{% endblock %}

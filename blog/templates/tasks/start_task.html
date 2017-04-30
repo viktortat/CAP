@@ -1,0 +1,137 @@
+{% extends 'tasks/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+    <div class="post">
+
+            <div class="date">
+               Дата: {{ task.pub_date }}
+            </div>
+        <h4 class="opis_tasks">№ {{ task.id}}: "{{ task.title }}"</h4>
+		<p><strong>Автор задания:</strong>
+		{{ task.user}} - id{{ task.user_id}} - <strong>цена {{ task.price}}</strong></p>
+		<p class="opis_tasks">Описание задания (условие задания):</p>
+        <p>{{ task.opisan|linebreaksbr }}</p>
+		<p class="opis_tasks">Что нужно указать в отчёте о выполненном задании:</p>
+		<p>{{ task.opis_vipoln }}</p>
+		<p class="opis_tasks">Внимание!</p>
+		<p class="">На выполнение этого задания выделяется - {{ task.get_srock_display }}! 
+			Чтобы выполнить задание, нажмите на кнопку «Начать выполнение». Необходимую подтверждающую информацию о выполнении задания нужно будет ввести здесь же, на странице задания. Успехов!</p>
+		{% if not task_s %}
+				<p class="opis_tasks">Выполнить</p>
+		
+		<form   name="start_t" method="post" action="{% url 'start_task' pk=task.id%}">
+			{% csrf_token %}
+			{% buttons %}
+				{% bootstrap_button "Начать выполнение" button_type="submit" button_class="btn-primary start" %}
+			{% endbuttons %}
+		</form>
+		{%endif%}
+		
+		{% if task_s %}
+		
+		{% for task in task_s %}
+		
+		{% if  task.proverka == 0 and task.start_task|date:'Y-m-j H:i:s' > a %}
+			{{ task.start_task|date:"Y-m-j H:i:s"  }}
+		
+		<p class="opis_tasks">Выполнить</p>
+
+	<div id="DateCountdown" data-date="{{ task.start_task|date:'Y-m-j H:i:s'  }}" style="width: 100%;"></div>
+	
+		<form   method="post" action="">
+			{% csrf_token %}
+			{% bootstrap_form otvet %}
+			{% buttons %}
+				{% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+			{% endbuttons %}
+		</form>
+		
+    </div>
+	
+{{a}}
+{%endif%}
+
+{% if task.proverka == 1 %}
+	<p class="opis_tasks">Ваш ответ на проверке.</p>
+{%endif%}
+{% if a >= task.start_task|date:'Y-m-j H:i:s' %}
+	<p class="opis_tasks">Время вышло.</p>
+	<form   name="start_t" method="post" action="{% url 'start_task' pk=task.id%}">
+			{% csrf_token %}
+			{% buttons %}
+				{% bootstrap_button "Начать выполнение" button_type="submit" button_class="btn-primary start" %}
+			{% endbuttons %}
+		</form>
+{%endif%}
+	{%endfor%}
+{%endif%}
+	<script>
+		$("#DateCountdown").TimeCircles({start: true}); 
+		$("#PageOpenTimer").fadeOut();
+		$(".start").click(function() {
+		$("#DateCountdown").TimeCircles().start();
+		$("#DateCountdown").fadeIn();
+         });
+
+$("#DateCountdown").TimeCircles({
+    "animation": "smooth",
+    "bg_width": 0.2,
+    "fg_width": 0.03,
+    "circle_bg_color": "#90989F",
+    "time": {
+        "Days": {
+            "text": "Days",
+            "color": "#40484F",
+            "show": true
+        },
+        "Hours": {
+            "text": "Hours",
+            "color": "#40484F",
+            "show": true
+        },
+        "Minutes": {
+            "text": "Minutes",
+            "color": "#40484F",
+            "show": true
+        },
+        "Seconds": {
+            "text": "Seconds",
+            "color": "#40484F",
+            "show": true
+        }
+    }
+});
+
+</script>
+        <script>
+          
+           $("#CountDownTimer").TimeCircles({ time: { Days: { show: false }, Hours: { show: false } }});
+            $("#PageOpenTimer").TimeCircles();
+            
+            var updateTime = function(){
+                var date = $("#date").val();
+                var time = $("#time").val();
+                var datetime = date + ' ' + time + ':00';
+                $("#DateCountdown").data('date', datetime).TimeCircles().start();
+            }
+            $("#date").change(updateTime).keyup(updateTime);
+            $("#time").change(updateTime).keyup(updateTime);
+            
+            // Start and stop are methods applied on the public TimeCircles instance
+            $(".startTimer").click(function() {
+                $("#CountDownTimer").TimeCircles().start();
+            });
+            $(".stopTimer").click(function() {
+                $("#CountDownTimer").TimeCircles().stop();
+            });
+
+            // Fade in and fade out are examples of how chaining can be done with TimeCircles
+            $(".fadeIn").click(function() {
+                $("#PageOpenTimer").fadeIn();
+            });
+            $(".fadeOut").click(function() {
+                $("#PageOpenTimer").fadeOut();
+            });
+
+        </script>   
+{% endblock %}

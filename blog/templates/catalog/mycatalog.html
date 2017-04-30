@@ -1,0 +1,25 @@
+{% extends 'catalog/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+<div>
+	<p>Мои ссылки в облаке сайтов:</p>
+	{% for message in messages %}
+      <h4 class="list-group-item-danger">{{ message }}</h4>
+    {% endfor %}
+	<table class="table table-striped">
+	{%for plinks in mylinks%}	
+		<tr>
+			<td>
+				<h5><a href="{{url}}">{{plinks.title}}</a></h5>
+				<!--<a href="{# url 'edit_serf' pk=serf.pk #}">Редактировать</a>-->
+			</td>			
+			<td>
+				Баланс ссылки - {{plinks.price}} руб.<br>
+				<a href="{% url 'popolnit_catalog' pk=plinks.pk %}">{% bootstrap_button "Пополнить" button_type="submit" name="1" button_class="btn-primary btn-xs" %}</a>
+		     </td>
+			<td></</td>						
+		</tr>		
+	{%endfor%}
+	</table>	
+</div>
+{% endblock %}

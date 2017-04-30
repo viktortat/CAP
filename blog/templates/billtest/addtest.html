@@ -1,0 +1,26 @@
+{% extends 'billtest/base.html' %}
+{% load bootstrap3 %}
+
+{% block content-title %}Рекламное продвижение в тестах - что это?{% endblock %}
+
+{% block content %}
+<div>
+	<a href="{%url 'billtestall'%}">Назад</a>
+	<p>Тесты на WMR-LOVE — это уникальный сервис, позволяющий пригласить человека на ваш интернет-ресурс, исследовать его или произвести какие-либо действия, после чего ответить на 3-5 контрольных вопросов. Это особенно полезно, если нужно, чтобы человек что-либо прочёл, прошёлся по разным страницам сайта или пришёл со страниц Google или Яндекс по требуемым ключевым словам. 
+	По вашему желанию тест может быть пройден пользователем многократно или только 1 раз в месяц.</p><hr>  
+	<p>Цена одного теста	<strong>0.40 руб.</strong>	
+	
+	{% for message in messages %}
+      <h4 class="list-group-item-danger">{{ message }}</h4>
+    {% endfor %}
+	<form   method="post" action="">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+		{% buttons %}
+			<p><a href="/pravila/" target="_blank">Прочтите правила (ссылка откроется в новом окне)</a></p>
+		{% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+		{% endbuttons %}
+    </form>
+</div>
+{% endblock %}
+

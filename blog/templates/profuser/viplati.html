@@ -1,0 +1,16 @@
+{% extends 'profuser/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+ 
+<div>
+	
+	<form   method="post" action="">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+		{% buttons %}
+		{% bootstrap_button "Вывести" button_type="submit" button_class="btn-primary" %}
+		{% endbuttons %}
+    </form>
+	
+</div>
+{% endblock %}

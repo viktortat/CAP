@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% block title %}
+    {% block blog_title %}{% endblock %}
+{% endblock %}
+
+{% block content-title %}
+	Сообщения
+{% endblock %}
+
+{% block content %}
+	{% block mail %}
+
+    <a href="{% url 'mymail' %}">{% bootstrap_button "Входящие" button_type="submit" button_class="btn-xs   btn-primary" %}</a>
+	<a href="{% url 'otmail' %}">{% bootstrap_button "Отправленные" button_type="submit" button_class="btn-xs   btn-primary" %}</a>
+	<a href="{% url 'addmail' %}">{% bootstrap_button "Написать" button_type="submit" button_class="btn-xs   btn-primary" %}</a>
+	<br><br>
+
+	{% endblock %}
+{% endblock %}

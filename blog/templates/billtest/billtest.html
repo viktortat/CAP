@@ -1,0 +1,26 @@
+{% extends 'billtest/base.html' %}
+
+{% block content %}
+<div>
+	<p>На WMR-LOVE есть много чего, за что платят реальные деньги: просмотр рекламных сайтов, чтение писем, участие в тестах, а также выполнение несложных заданий. Работа не пыльная и интересная. А вместе с рефералами - ещё и весьма доходная!</p>
+	
+	{% for message in messages %}
+      <h4 class="list-group-item-danger">{{ message }}</h4>
+    {% endfor %}
+	
+		<table class="table table-bordered table-hover">
+		<th class="span-task active">
+			<span>Название<span>
+		</th>
+		<th class="span-task active">
+			Оплата
+		</th>
+	{% for test in userinfo %}
+		<tr>
+			<td><a href="{% url 'test_detail' pk=test.pk %}">{{test.title}}</a></td>			
+			<td class="span-task">{{test.price_u}} руб.</td>			
+		</tr>			
+	{%endfor%}
+	</table>	
+</div>
+{% endblock %}

@@ -1,0 +1,346 @@
+{% load staticfiles %}
+{% load bootstrap3 %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<meta name="description" content="Работа в интернете. Реклама и продвижение сайта в интернете">
+	<meta name="keywords" content="работа в интернете, реклама,продвижение,раскрутка,оптимизация,сео,серфинг,тесты,опросы,задания">
+	<title>{% block title %}WMR-LOVE - система активной рекламы, лучшее место для заработка{% endblock %}</title>	
+	<link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/png">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'js/inc/TimeCircles.css' %}" rel="stylesheet">
+
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/jquery-ui/jquery-ui.min.js' %}"></script>
+	<link href="{% static 'js/jquery-ui/jquery-ui.theme.min.css' %}" rel="stylesheet">
+	<link href="{% static 'js/jquery-ui/jquery-ui.min.css' %}" rel="stylesheet">
+	<script src="{% static 'js/inc/TimeCircles.js' %}"></script>
+
+	
+	<link href="{% static 'js/morris/morris.css' %}" rel="stylesheet">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	<script src="{% static 'js/morris/morris.min.js' %}"></script>
+	
+	<script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
+	{% bootstrap_css %}
+</head>
+<body>
+	<div class="container">
+	<div class="header">
+		<header>
+			<div class="logo">
+				<div class="logo-img">
+					<a href="/"><img src="{% static 'images/logo.jpg' %}"></a>
+				</div>
+				<div class="deviz">
+					<span>система активной рекламы</span>
+				</div>
+			</div>
+			<div class="stat-header">
+				<div class="stat-left">		
+					<p class="p-stat-header">Всего пользователей: <strong>{{statusercount}}</strong></p>
+					<p class="p-stat-header">Новых за 24 часа: <strong>{{new_users}}</strong></p>
+					{% for static in stat %}
+					<p class="p-stat-header">Активных за 24 часа: <strong>{{activ_users}}</strong></p>
+				</div>
+				<div class="stat-right">
+					
+						<p class="p-stat-header">Всего кликов: <strong>{{static.click}}</strong></p>
+						<p class="p-stat-header">Выполнено заданий: <strong>{{static.task}}</strong></p>
+						<p class="p-stat-header">Сумма выплат: <strong>{{static.viplat}} </strong></p>
+					{%endfor%}
+				</div>
+			</div>
+		</header>
+		</div>
+		
+		<nav class="main-menu" role="navigation">
+			<ul class="nav nav-pills nav-justified ">
+				<li><a href="/">Главная</a></li>
+				<li><a href="/reclamodatel/">Рекламодателям</a></li>
+				<li><a href="/viplati/">Выплаты</a></li>
+				<li><a href="/blog/">Новости</a></li>
+				<li><a href="/faq/">FAQ</a></li>
+				<li><a href="/forum/">Форум</a></li>
+				<li><a href="/top/">ТОП</a></li>
+				<li><a href="/konkurs/">Конкурсы</a></li>
+			</ul>		
+		</nav>
+		
+			<div class="left-side">
+			
+				<header class="header-side">
+					Профиль
+				</header>
+				<div class="profil">
+				{% if user.is_active %}
+					<p>Добро пожаловать {{ user }}</p>
+					    <div class="avat">
+				        	{% for info in ava %}
+					        	{% if not info.picture %}
+						            <img class="avata" src="/media/profile_images/ava.png"/>
+					        	{% else %}
+				                	<img class="avata" src="{{ info.picture.url }}"/>
+					            {%endif%}
+				        	{%endfor%}
+				    	</div>
+						<br>
+					<p>
+						<a href="{%url 'info' %}">{% bootstrap_button "Профиль" button_type="submit" button_class="btn-xs   btn-primary" %}</a>
+						<a href="{%url 'mymail' %}">{% bootstrap_button "Почта" button_type="submit" button_class="btn-xs   btn-primary" %} <span class="badge">{{my_mail}}</span></a>		
+					</p>	
+					<p>
+						<a href="{%url 'stat_user' %}">{% bootstrap_button "Статистика" button_type="submit" button_class="btn-xs   btn-primary" %}</a>
+					</p>
+					<p><a class="btn-sm btn-warning" href="/accounts/logout">Выход</a></p>
+				{% else %}
+					<p><a class="btn btn-warning" href="/accounts/signup">Регистрация</a></p>
+					<p><a class="btn btn-warning" href="/accounts/login">Вход</a></p>
+				{% endif %}
+				</div>
+				
+
+				<header class="header-side">
+					У нас сейчас - {% now “SHORT_DATE_FORMAT” %}
+				</header>
+				<div class="profil">
+
+				</div>				
+				{% if user.is_active %}
+				<header class="header-side">
+					Мой баланс
+				</header>
+				<div class="profil">
+					<div class="rek-schet">
+					{% for info in schet_u %}
+							<p>{{info.schet_lich}} руб.</p>
+							<a href="{% url 'sys_viplat' %}">{% bootstrap_button "Вывести" button_type="submit" button_class="btn-xs   btn-primary" %}</a>
+					{%endfor%}
+					</div>
+				</div>
+				
+				<header class="header-side">
+					Зарабатывать
+				</header>
+				<div class="profi">
+					<div class="nav nav-tabs nav-stacked">
+						<a href="{% url 'serfall' %}" class="list-group-item menu-left">Серфинг сайтов</a>
+						<a href="{% url 'perehodall' %}" class="list-group-item menu-left">Переходы на сайты</a>
+						<a href="{% url 'billtestall' %}" class="list-group-item menu-left">Прохождение тестов</a>
+						<a href="{% url 'tasksall' %}" class="list-group-item menu-left">Оплачиваемые задания</a>
+						<a href="{% url 'pismoall' %}" class="list-group-item menu-left">Чтение писем</a>
+					</div>
+				</div>
+				
+				<header class="header-side">
+					Рефералы
+				</header>
+				<div class="profi">
+					<a href="{% url 'myreferal' %}" class="list-group-item menu-left">Мои рефералы</a>
+					<a href="{% url 'rekmat' %}" class="list-group-item menu-left">Работа с рефералами</a>
+					<a href="/karera/" class="list-group-item menu-left">Карьера</a>
+				</div>
+				
+				{%endif%}
+				<div class="baner">
+	
+                <a href="https://sfereon.net/index/24857"><img src="https://sfereon.net/img/200x300_1.gif"></a>
+				</div>
+			
+		</div>
+		
+		<aside class="right-side">
+			<div>
+				{% if user.is_active %}
+					<header class="header-side">
+						Разместить рекламу
+					</header>
+			
+					<div class="profi">
+						<a href="{% url 'addserf' %}" class="list-group-item menu-left">Реклама в серфинге</a>
+						<a href="{% url 'addperehod' %}" class="list-group-item menu-left">Купить переходы</a>
+						<a href="{% url 'addtasks' %}" class="list-group-item menu-left">Оплачиваемые задания</a>
+						<a href="{% url 'addtest' %}" class="list-group-item menu-left">Оплачиваемые тесты</a>
+						<a href="{% url 'addpismo' %}" class="list-group-item menu-left">Оплачиваемые письма</a>
+						<a href="{% url 'addplinks' %}" class="list-group-item menu-left">Псевдо ссылки</a>						
+						<a href="{% url 'addcontlinks' %}" class="list-group-item menu-left">Контекстная реклама</a>
+						<a href="{% url 'addsite' %}" class="list-group-item menu-left">Облако сайтов</a>
+					</div>
+					
+					<header class="header-side">
+						Рекламный баланс
+					</header>
+					<div class="profil">
+					{% for info in schet_u %}
+						<div class="rek-schet">
+							<p>{{info.schet_reklam}} руб.</p>
+							<a href="{% url 'sys_popol' %}">{% bootstrap_button "Пополнить" button_type="submit" button_class="btn-xs   btn-primary" %}</a>
+					{%endfor%}
+						</div>
+					</div>
+					
+					<header class="header-side">
+						Моя реклама
+					</header>
+					<div class="profi">
+						<a href="{% url 'mytasks' %}" class="list-group-item menu-left">Мои задания</a>
+						<a href="{% url 'mytest' %}" class="list-group-item menu-left">Мои тесты</a>
+						<a href="{% url 'mypismo' %}" class="list-group-item menu-left">Мои письма</a>
+						<a href="{% url 'myserf' %}" class="list-group-item menu-left">Сылки серфинга</a>
+						<a href="{% url 'myperehod' %}" class="list-group-item menu-left">Сылки переходов</a>
+						<a href="{% url 'myplinks' %}" class="list-group-item menu-left">Псевдо ссылки</a>
+						<a href="{% url 'mycontlinks' %}" class="list-group-item menu-left">Контекстная реклама</a>
+						<a href="{% url 'mycatalog' %}" class="list-group-item menu-left">Облако сайтов</a>
+					</div>
+					{%endif%}
+					
+					<header class="header-side">
+						Это может быть интересно
+					</header>
+					<div class="profil">				
+						{% for cont in contlinks %}
+							<p><a href="{{cont.url}}">{{cont.title}}</a><br>
+							<small>{{cont.opis}}</small><br>
+							<small>{{cont.url}}</small></p>
+						{%endfor%}
+					</div>
+					<header class="header-side">
+						Будь с нами
+					</header>
+					<div class="profil">				
+							<p>
+							    <a href="https://twitter.com/wmr_love_com" target=_blank><IMG class="ico_soc" SRC="/static/images/ico-twitter.png" title="Мы в twitter" border="0"></a>&nbsp
+							    <a href="https://vk.com/publicwmrlove" target=_blank><IMG class="ico_soc" SRC="/static/images/ico-vk.png" title="Мы в Вконтакте" border="0"></a>&nbsp
+							</p>
+					</div>
+			</div>
+		</aside>
+		
+		
+		
+		</main>
+			<div class="main">
+			<article>
+				<header class="title-post">
+					<h2>{% block content-title %}Заголовок страницы{% endblock %}</h2>
+				</header>
+				<div class="main-content">
+					{% block mail %}
+					{% endblock %}
+					{% block content %}
+
+					{% endblock %}
+				</div>
+				<footer  class="footer-loop">
+					
+				</footer>
+			</article>
+			</div>
+		</main>
+	</div>
+	<footer>
+		<div class="footer">
+			Все права защищены &copy; 2017.&nbsp&nbsp&nbsp 
+						<!-- begin WebMoney Transfer : attestation label --> 
+<a href="https://passport.webmoney.ru/asp/certview.asp?wmid=425992987648" target=_blank><IMG SRC="/static/images/attestated.png" title="аттестат нашего WM" border="0"></a>&nbsp 
+<a href="https://webmoney.ru/" target=_blank><IMG SRC="/static/images/wm.png" title="Мы принимаем Webmoney" border="0"></a>&nbsp 
+<!-- end WebMoney Transfer : attestation label -->
+			    
+				<a href="/pravila/" class="a-footer">Правила</a>&nbsp|
+				<a href="/contact/" class="a-footer">Контакты</a>&nbsp|
+				<a href="{%url 'siteall'%}" class="a-footer">Облако сайтов</a>&nbsp
+				<small class="right-footer"><!--LiveInternet counter--><script type="text/javascript">
+document.write("<a href='//www.liveinternet.ru/click' "+
+"target=_blank><img src='//counter.yadro.ru/hit?t44.6;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";h"+escape(document.title.substring(0,80))+";"+Math.random()+
+"' alt='' title='LiveInternet' "+
+"border='0' width='31' height='31'><\/a>")
+</script><!--/LiveInternet-->
+</small>				
+			
+		</div>
+	</footer>
+	<!-- BEGIN JIVOSITE CODE {literal} -->
+<script type='text/javascript'>
+(function(){ var widget_id = 'zOrfcIcR7G';var d=document;var w=window;function l(){
+var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);}if(d.readyState=='complete'){l();}else{if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();</script>
+<!-- {/literal} END JIVOSITE CODE -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter42506519 = new Ya.Metrika({
+                    id:42506519,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/42506519" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<!-- hit.ua -->
+<a href='http://hit.ua/?x=92786' target='_blank'>
+<script language="javascript" type="text/javascript"><!--
+Cd=document;Cr="&"+Math.random();Cp="&s=1";
+Cd.cookie="b=b";if(Cd.cookie)Cp+="&c=1";
+Cp+="&t="+(new Date()).getTimezoneOffset();
+if(self!=top)Cp+="&f=1";
+//--></script>
+<script language="javascript1.1" type="text/javascript"><!--
+if(navigator.javaEnabled())Cp+="&j=1";
+//--></script>
+<script language="javascript1.2" type="text/javascript"><!--
+if(typeof(screen)!='undefined')Cp+="&w="+screen.width+"&h="+
+screen.height+"&d="+(screen.colorDepth?screen.colorDepth:screen.pixelDepth);
+//--></script>
+<script language="javascript" type="text/javascript"><!--
+Cd.write("<img src='//c.hit.ua/hit?i=92786&g=0&x=2"+Cp+Cr+
+"&r="+escape(Cd.referrer)+"&u="+escape(window.location.href)+
+"' border='0' wi"+"dth='1' he"+"ight='1'/>");
+//--></script>
+<noscript>
+<img src='//c.hit.ua/hit?i=92786&amp;g=0&amp;x=2' border='0'/>
+</noscript></a>
+<!-- / hit.ua -->
+<!-- Rating@Mail.ru counter -->
+<script type="text/javascript">
+var _tmr = window._tmr || (window._tmr = []);
+_tmr.push({id: "2861231", type: "pageView", start: (new Date()).getTime()});
+(function (d, w, id) {
+  if (d.getElementById(id)) return;
+  var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+  ts.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//top-fwz1.mail.ru/js/code.js";
+  var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+  if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+})(document, window, "topmailru-code");
+</script><noscript><div style="position:absolute;left:-10000px;">
+<img src="//top-fwz1.mail.ru/counter?id=2861231;js=na" style="border:0;" height="1" width="1" alt="Рейтинг@Mail.ru" />
+</div></noscript>
+<!-- //Rating@Mail.ru counter -->
+
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends 'serfing/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+ 
+<div>
+	
+	<p>Ссылки размещаются внизу на странице серфинга</p> 
+	<p>4 рубляв сутки</p> 
+	<hr> 
+	
+	{% for message in messages %}
+      <h4 class="list-group-item-danger">{{ message }}</h4>
+    {% endfor %}
+	
+	<form   method="post" action="">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+		{% buttons %}
+		<p><a href="/pravila/" target="_blank">Прочтите правила (ссылка откроется в новом окне)</a></p>
+		{% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+		{% endbuttons %}
+    </form>
+	
+</div>
+{% endblock %}

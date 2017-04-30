@@ -1,0 +1,27 @@
+{% extends 'profuser/base.html' %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block content-title %}
+Пополнение рекламного счета
+{% endblock %}
+{% block content %}
+ 
+<div>
+	<p>Выбирите систему для пополнения или переведите с основного баланса</p>
+	{% for message in messages %}
+      <h4 class="list-group-item-danger">{{ message }}</h4>
+    {% endfor %}
+	<table>
+		<tr>
+			<td><a href="{% url 'popoln_webm' %}"><img class="img-sys" src="{% static 'images/wmr.png' %}"></a></td>
+			<td><a href="{% url 'popoln_yandex' %}"><img class="img-sys" src="{% static 'images/yandex.png' %}"></a></td>
+			<td><a href="{% url 'popoln_qiwi' %}"><img class="img-sys" src="{% static 'images/qiwi.png' %}"></a></td>
+		</tr>	
+		<tr>
+			<td><a href="{% url 'popoln_pm' %}"><img class="img-sys" src="{% static 'images/perfect.png' %}"></a></td>
+			<td><a href="{% url 'popoln_payeer' %}"><img class="img-sys" src="{% static 'images/payeer.png' %}"></a></td>
+			<td><a href="{% url 'perevod' %}"><img class="img-sys" src="{% static 'images/popol.png' %}"></a></td>
+		</tr>
+	</table>
+</div>
+{% endblock %}

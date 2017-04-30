@@ -1,0 +1,57 @@
+{% extends 'tasks/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+<div>
+	<p>Ваши задания. Здесь Вы можете проверить ответы на задания.</p>
+	{% for message in messages %}
+      <h4 class="list-group-item-danger">{{ message }}</h4>
+    {% endfor %}
+	{%for tasks in mytasks%}	
+	<table class="table table-striped">
+		<strong>{{tasks.title}}</strong><br>
+		{% if tasks.com %}
+			<p>{{tasks.com}}</p>
+		{% endif %}
+		<small>№ {{tasks.id}} | Вознаграждение: {{tasks.price}} руб.</small>
+		<tr>	
+			<td><br>
+				<a href="{% url 'otvet_task' pk=tasks.pk %}">{% bootstrap_button "Проверить ответы" button_type="submit" name="1" button_class="btn-primary btn-xs" %}</a><br>
+			<td>
+			<td>
+				{% if tasks.moder == 0 and tasks.odobren == 0 %}
+					<a href="{% url 'moder_task' pk=tasks.pk %}">{% bootstrap_button "Отправить на модерацию" button_type="submit" name="1" button_class="btn-primary btn-xs" %}</a><br>
+				{% endif %}
+				
+				{% if tasks.moder == 0 and tasks.odobren == 1 %}
+					<a href="{% url 'moder_task' pk=tasks.pk %}">{% bootstrap_button "Отправить на модерацию" button_type="submit" name="1" button_class="btn-primary btn-xs" %}</a><br>
+				{% endif %}
+				
+				{% if tasks.moder == 1 and tasks.odobren == 0 %}
+					Задание на модерации<br>
+				{% endif %}
+
+				{% if tasks.moder == 1 and tasks.odobren == 1 %}
+					<strong>Задание одобрено</strong><br>
+				{% endif %}
+				
+				<a href="{% url 'edit_task' pk=tasks.pk %}">{% bootstrap_button "Редактировать" button_type="submit" name="1" button_class="btn-primary btn-xs" %}</a>&nbsp &nbsp
+				<a href="{% url 'delete_task' pk=tasks.pk %}">{% bootstrap_button "Удалить" button_type="submit" name="1" button_class="btn-danger btn-xs" %}</a>
+			</td>
+			<td>
+				Баланс задания - {{tasks.price_task}} руб.<br>
+				<a href="{% url 'popolnit_task' pk=tasks.pk %}">{% bootstrap_button "Пополнить" button_type="submit" name="1" button_class="btn-primary btn-xs" %}</a>
+				{% if tasks.pausa == 0 %}
+					<a href="{% url 'pausa_task' pk=tasks.pk  %}" >{% bootstrap_button "Остановить" button_type="submit" name="1" button_class="btn-warning btn-xs" %}</a>
+				{% endif %}
+				
+				{% if tasks.pausa == 1 %}
+					<a href="{% url 's_task' pk=tasks.pk  %}">{% bootstrap_button "Запустить" button_type="submit" name="1" button_class="btn-success btn-xs" %}</a>
+				{% endif %}
+		     </td>
+		</tr>
+	
+	</table>	
+
+	{%endfor%}
+</div>
+{% endblock %}

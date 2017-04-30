@@ -1,0 +1,34 @@
+{% extends 'mail/base.html' %}
+{% block title %}
+    {% block blog_title %}{% endblock %}
+{% endblock %}
+
+{% block content-title %}
+	Полученные cообщения
+{% endblock %}
+
+{% block content %}
+	<table class="table table-bordered table-hover">
+		<th class="span-task active">
+			<span>От кого<span>
+		</th>
+		<th class="span-task active">
+			Тема{{mail_count}}
+		</th>
+		<th class="span-task active">
+			Дата
+		</th>
+	{% if mail %}
+		{% for m in mail%}
+		<tr>		
+			<td>{{m.sender }}</td>			
+			<td><a href="{% url 'detail_mail' pk=m.pk %}">{{m.title}}</a></td>			
+			<td>{{m.pub_date|date:"j.m.y H:i"}}</td>	
+		</tr>			
+	{%endfor%}
+	{% else %}
+		<h5>Сообщений нет</h5>	
+	{% endif %}
+	</table>	
+
+{% endblock %}

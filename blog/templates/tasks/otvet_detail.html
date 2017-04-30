@@ -1,0 +1,33 @@
+{% extends 'tasks/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+    <div class="post">
+	<a href="/tasks/otvet_task/{{pk}}">{% bootstrap_button "Назад" button_type="submit" button_class="btn-primary btn-xs" %}</a><br><br>
+            <div class="date">
+               <p>Исполнитель: {{otvet.otvet_user}}</p>
+            </div>
+			<p><strong>Ответ на задание</strong></p>
+			{% if otvet.us_opis_vipoln != ''%}
+				{{ otvet.us_opis_vipoln}}
+			{%endif%}
+			
+			{% if otvet.us_opis_vipoln == ''%}
+				Ответ на задание подтвержден!
+			{%endif%}
+		<form   method="post" action="">
+			{% csrf_token %}
+			{% bootstrap_form form %}
+			{% buttons %}
+				{% bootstrap_button "Одобрить" button_type="submit" button_class="btn-primary" %}			
+			{% endbuttons %}
+		</form>
+		
+		<form   method="post" action="{% url 'dor_otvet' pk=otvet.id%}">
+			{% csrf_token %}
+			{% bootstrap_form com %}
+			{% buttons %}
+				{% bootstrap_button "На доработку" button_type="submit" button_class="btn-primary" %}
+			{% endbuttons %}
+		</form>
+    </div>
+{% endblock %}

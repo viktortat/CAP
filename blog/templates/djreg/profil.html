@@ -1,0 +1,16 @@
+{% extends 'djreg/base.html' %}
+
+{% block content %}
+
+       
+        <a href="/">Return to the homepage.</a><br />
+        <form id="user_form" method="post" action="/profil/">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <input type="submit" name="submit" value="‘охранить" />
+        </form>
+
+{% endblock %}

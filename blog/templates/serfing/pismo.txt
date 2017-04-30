@@ -1,0 +1,39 @@
+{% extends 'serfing/base.html' %}
+
+{% block content %}
+<div>
+	<p>На WMR-LOVE есть много чего, за что платят реальные деньги: просмотр рекламных сайтов, чтение писем, участие в тестах, а также выполнение несложных заданий. Работа не пыльная и интересная. А вместе с рефералами - ещё и весьма доходная!</p>
+	{% for message in messages %}
+      <h4 class="list-group-item-danger">{{ message }}</h4>
+    {% endfor %}
+	<h4><srong>Зарабатывай, читая письма рекламодателей</srong></h4>
+		<table class="table table-bordered table-hover">
+		<th class="span-task active">
+			<span>Название<span>
+		</th>
+		<th class="span-task active">
+			Оплата
+		</th>
+	{%for serf in userinfo%}
+	<tr>		
+			<td><a href="{% url 'frame_serf' pk=serf.pk %}" target="_blank">{{serf.title|truncatechars:"50"}}</a><br>
+			<small class="s-cat-task">№ {{serf.id}}: {{serf.opisan|truncatechars:"65"}}</small>
+			</td>			
+			<td class="span-task">{{serf.price_u}} руб.<br>
+					{{serf.time_r}} сек.
+			</td>
+		</tr>				
+	{%endfor%}
+	</table><br>	
+	<h4><srong>Псевдо ссылки</srong></h4>
+	<table class="table table-striped">
+	{%for link in plinks%}
+		<tr>
+			<td><h4 class="h4-serf"><a href="{{link.url}}" target="_blank">{{link.title}}</a></h4>
+			{{link.opis}}
+			</td>					
+		</tr>			
+	{%endfor%}
+	</table>	
+</div>
+{% endblock %}

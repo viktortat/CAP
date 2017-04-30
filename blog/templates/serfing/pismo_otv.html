@@ -1,0 +1,30 @@
+{% extends 'serfing/base.html' %}
+{% load bootstrap3 %}
+{% block content-title %}№ {{pismo.id}} <srong>{{ pismo.title }}</srong>{% endblock %}
+{% block content %}
+
+	{% for message in messages %}
+      <h4 class="list-group-item-danger">{{ message }}</h4>
+    {% endfor %}
+	
+
+	<p>{{ pismo.opis}} </p><br>	
+	
+	<p class="p-otv-pismo">Ответьте, пожалуйста, на контрольный вопрос:</p>
+	<p class="p-otv-quest">{{ pismo.quest_1}} </p><br>	
+	
+	<div class="form-otv-pismo">		
+	<form   method="post" action="">
+        {% csrf_token %}
+		<input value="{{ pismo.quest_1_ans_1 }}" type="submit" name="one" class="btn-primary btn-pismo"><br><br>
+		<input value="{{ pismo.quest_1_ans_2 }}" type="submit" name="two" class="btn-primary btn-pismo"><br><br>
+		<input value="{{ pismo.quest_1_ans_3 }}" type="submit" name="three" class="btn-primary btn-pismo">
+    </form>
+	</div><br>
+	<div class="url-otv-pismo">
+		<small >
+			Будет произведён переход на сайт <br>
+			{{ pismo.url}}
+		</small>
+	</div>
+{% endblock %}

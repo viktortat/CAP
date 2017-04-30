@@ -1,0 +1,26 @@
+{% extends 'profuser/base.html' %}
+{% load bootstrap3 %}
+{% block content-title %}
+Пополнение счета через яндекс деньги.
+{% endblock %}
+{% block content %}
+ 
+<div>
+	<p></p>
+
+<form method="POST" action="https://money.yandex.ru/quickpay/confirm.xml"> 
+    <input type="hidden" name="receiver" value="410014902280911"> 
+    <input type="hidden" name="formcomment" value="Пополнение счета на wmr-love.com"> 
+    <input type="hidden" name="short-dest" value="Пополнение счета на wmr-love.com"> 
+    <input type="hidden" name="label" value="{{user}}"> 
+    <input type="hidden" name="quickpay-form" value="small"> 
+    <input type="hidden" name="targets" value="транзакция {{user}}"> 
+    <input type="hidden" name="sum" value="{{money}}" data-type="number"> 
+    <input type="hidden" name="test_notification" value="true">
+    <input type="hidden" name="test_result" value="success">
+    <label><input type="radio" name="notification_type" value="p2p-incoming">Яндекс.Деньгами</label> 
+    <label><input type="radio" name="notification_type" value="card-incoming">Банковской картой</label> 
+    <input type="submit" value="Перевести"> 
+</form>
+</div>
+{% endblock %}

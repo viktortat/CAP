@@ -1,0 +1,26 @@
+{% extends 'profuser/base.html' %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block content-title %}
+Запрос на вывод средств
+{% endblock %}
+{% block content %}
+ 
+<div>
+	<p>У вас уже накопилась достаточная для снятия сумма? Поздравляем! Вы можете сами выбрать, на какой из своих кошельков вывести заработанное. Тщательно проверьте реквизиты кошельков. </p>
+	{% for message in messages %}
+      <h4 class="list-group-item-danger">{{ message }}</h4>
+    {% endfor %}
+	<table>
+		<tr>
+			<td><a href="{% url 'vivod_wmr' %}"><img class="img-sys" src="{% static 'images/wmr.png' %}"></a></td>
+			<td><a href="{% url 'vivod_yandex' %}"><img class="img-sys" src="{% static 'images/yandex.png' %}"></a></td>
+			<td><a href="{% url 'vivod_qiwi' %}"><img class="img-sys" src="{% static 'images/qiwi.png' %}"></a></td>
+		</tr>	
+		<tr>
+			<td><a href="{% url 'vivod_perfect' %}"><img class="img-sys" src="{% static 'images/perfect.png' %}"></a></td>
+			<td><a href="{% url 'vivod_payeer' %}"><img class="img-sys" src="{% static 'images/payeer.png' %}"></a></td>
+		</tr>
+	</table>
+</div>
+{% endblock %}

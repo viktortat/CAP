@@ -1,0 +1,19 @@
+{% extends 'profuser/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+ 
+<div>
+	<a href="{%url 'info'%}">Назад</a>
+	<p>Ваш id - {{user.id}}</p>   
+	
+	<form   method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+		{% buttons %}
+		{% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary" %}
+		{% endbuttons %}
+    </form>
+	
+</div>
+{% endblock %}
+

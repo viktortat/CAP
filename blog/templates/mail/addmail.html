@@ -1,0 +1,19 @@
+{% extends 'mail/mymail.html' %}
+{% load bootstrap3 %}
+{% block content-title %}
+	Отправить cообщение
+{% endblock %}
+{% block content %}
+
+<div>
+	
+	<form   method="post" action="">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+		{% buttons %}
+		{% bootstrap_button "Отправить" button_type="submit" button_class="btn-primary" %}
+		{% endbuttons %}
+    </form>
+	
+</div>
+{% endblock %}

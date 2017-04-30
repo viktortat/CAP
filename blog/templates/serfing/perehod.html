@@ -1,0 +1,115 @@
+{% extends 'serfing/base.html' %}
+<title>10</title>
+{% block content %}
+	<div class="mess-div"><h4 class="mess"></h4></div>
+	<p>1. Перейдите по ссылке.<br>
+			2. Просматривайте сайт указанное количество секунд. 
+				Таймер просмотра идет в заголовке этой страницы в браузере.<br>
+			3. Прокрутите просматриваемую страницу вниз.<br>
+			4. Сделайте несколько переходов по ссылкам просматриваемого сайта.<br>
+			5. После этого вернитесь на сайт.<br>
+			6. Получаете оплату!</p>
+	{% for message in messages %}
+      <h4 class="list-group-item-danger">{{ message }}</h4>
+    {% endfor %}
+	
+	<h4><srong>Cсылки на сегодня</srong></h4>
+		<table class="table table-bordered table-hover">
+		<th class="span-task active">
+			<span>Название<span>
+		</th>
+		<th class="span-task active">
+			Оплата
+		</th>
+	{%for serf in userinfo%}
+	<tr>		
+			<td><a class="a-perehod" id="{{serf.id}}" href="{{serf.url}}" target="_blank">{{serf.title|truncatechars:"50"}}</a><br>
+			<small class="s-cat-task">№ {{serf.id}}: {{serf.opisan|truncatechars:"65"}}</small>
+			</td>			
+			<td class="span-task">{{serf.price_u}} руб.<br>
+					{{serf.time_r}} сек.
+			</td>
+		</tr>				
+	{%endfor%}
+	</table><br>	
+	<h4><srong>Псевдо ссылки</srong></h4>
+	<table class="table table-striped">
+	{%for link in plinks%}
+		<tr>
+			<td><h4 class="h4-serf"><a href="{{link.url}}" target="_blank">{{link.title}}</a></h4>
+			{{link.opis}}
+			</td>					
+		</tr>			
+	{%endfor%}
+	</table>	
+	<p id="par1"></p>
+	<p class="user" id="{{usl}}"></p>
+	
+<script>  
+$(document).ready(function(){$(".mess-div").hide();});
+
+$( ".a-perehod" ).click(function() {
+  //Id ссылки и пользователя
+  id = $(this).attr("id");
+  id = parseInt(id);
+  user = $(".user").attr("id");
+  user = parseInt(user);
+  var focus = true;
+  window.onblur = function() { focus = false};
+  $(".mess").html("");
+	  //Запрос на получение данных ссылки
+	  $.post("frame_perehod/", 
+	  {
+        'pk': id,
+	  },
+		function(data) {		
+			//Устанавливаю в title значение таймера
+			document.title = data;
+			$(".mess").html("");
+			  window.onblur = function() { focus = false};
+			//Функция обработки таймера
+			function timer(){
+				var obj = $("title")[0];
+				obj.innerHTML--;
+				if (obj.innerHTML==0){
+					//При завершение таймера отправка POST запроса
+					$.post("frame_perehod1/", 
+						{
+							'pk': id,
+							'user': user,
+						},
+						function(data) {				
+							//$(".mess").text(data);
+							document.title="0";
+							//При фокусе показать сообщение
+							window.onfocus = function() { focus = true;  
+							$(".mess-div").show(); 
+							$(".mess").text(data)
+							$(".mess-div").fadeOut(4000);						
+							};						
+						}					
+					);					
+					setTimeout(function(){},1000);
+				} else {
+					setTimeout(timer,1000);		
+					//При фокусе показать сообщение
+					window.onfocus = function () { focus = true; 
+						document.title="Talk"; 
+						$(".mess-div").show();
+						$(".mess").html("Ошибка! Вы вернульсь раньше окончания таймера.");	
+						$(".mess-div").fadeOut(5500);
+						//Перезагрузка страницы
+						function a () {location.reload()};
+						setTimeout(a,3000)
+					};					
+			}
+	}
+			document.onblur = window.onblur;
+			document.focus = window.focus;
+			setTimeout(timer,1000);				
+		}
+		);
+});
+</script>
+{% endblock %}
+

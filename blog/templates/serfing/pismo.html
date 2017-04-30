@@ -1,0 +1,28 @@
+{% extends 'serfing/base.html' %}
+
+{% block content %}
+
+	<p>На WMR-LOVE есть много чего, за что платят реальные деньги: просмотр рекламных сайтов, чтение писем, участие в тестах, а также выполнение несложных заданий. Работа не пыльная и интересная. А вместе с рефералами - ещё и весьма доходная!</p>
+	{% for message in messages %}
+      <h4 class="list-group-item-danger">{{ message }}</h4>
+    {% endfor %}
+	<h4><srong>Зарабатывай, читая письма рекламодателей</srong></h4>
+		<table class="table table-bordered table-hover">
+		<th class="span-task active">
+			<span>Название<span>
+		</th>
+		<th class="span-task active">
+			Оплата
+		</th>
+	{%for serf in userinfo%}
+	<tr>		
+			<td>
+				<small class="s-cat-task">№ {{serf.id}}:</small> <a href="{% url 'pismo_otv' pk=serf.pk %}" target="_blank">{{serf.title|truncatechars:"50"}}</a><br>		
+			</td>			
+			<td class="span-task">{{serf.price_u}} руб.
+			</td>
+		</tr>				
+	{%endfor%}
+	</table><br>	
+
+{% endblock %}

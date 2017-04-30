@@ -1,0 +1,20 @@
+{% extends 'profuser/base.html' %}
+{% load bootstrap3 %}
+{% block content-title %}Стать рефералом{% endblock %}
+{% block content %}
+ 
+<div>
+	{% for message in messages %}
+		<h4>{{ message }}</h4>
+    {% endfor %}
+	<p>Для подтверждения введите слово "ДА"</p>
+	<form   method="post" action="">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+		{% buttons %}
+		{% bootstrap_button "Отправить" button_type="submit" button_class="btn-primary" %}
+		{% endbuttons %}
+    </form>
+	
+</div>
+{% endblock %}

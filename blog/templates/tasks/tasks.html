@@ -1,0 +1,112 @@
+{% extends 'tasks/base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+<script>
+  $( function() {
+    $( "#slider" ).slider({
+      value:0.25,
+      min: 0.25,
+      max: 20,
+      step: 0.05,
+      slide: function( event, ui ) {
+        $( "#id_cen" ).val( ui.value );
+      }
+    });
+    $( "#id_cen" ).val( $( "#slider" ).slider( "value" ));
+  } );
+</script>
+<div>
+	<p>На WMR-LOVE есть много чего, за что платят реальные деньги: просмотр рекламных сайтов, чтение писем, участие в тестах, а также выполнение несложных заданий. Работа не пыльная и интересная. А вместе с рефералами - ещё и весьма доходная!</p>
+	{% for message in messages %}
+		<h4>{{ message }}</h4>
+    {% endfor %}
+	<h4>Тип заданий</h4>
+		<p>
+			<a href="{% url 'tasksall' %}">{% bootstrap_button "Все задания" button_type="submit" button_class="btn-primary btn-sm" %}</a>
+			<a href="{% url 'taskscat' pk='0' %}">{% bootstrap_button "Клики" button_type="submit" button_class="btn-primary btn-sm" %}</a>
+			<a href="{% url 'taskscat' pk='1' %}">{% bootstrap_button "Клики YouTube" button_type="submit" name="1" button_class="btn-primary btn-sm" %}</a>		
+			<a href="{% url 'taskscat' pk='2' %}">{% bootstrap_button "Капча" button_type="submit" name="1" button_class="btn-primary btn-sm" %}</a>
+			<a href="{% url 'taskscat' pk='3' %}">{% bootstrap_button "Рег. без активности" button_type="submit" name="1" button_class="btn-primary btn-sm" %}</a>
+			<a href="{% url 'taskscat' pk='4' %}">{% bootstrap_button "Рег. с активностью" button_type="submit" name="1" button_class="btn-primary btn-sm" %}</a>
+		</p>
+		<p>
+			<a href="{% url 'taskscat' pk='5' %}">{% bootstrap_button "Соц. сети" button_type="submit" name="1" button_class="btn-primary btn-sm" %}</a>
+			<a href="{% url 'taskscat' pk='6' %}">{% bootstrap_button "Постинг" button_type="submit" name="1" button_class="btn-primary btn-sm" %}</a>
+			<a href="{% url 'taskscat' pk='7' %}">{% bootstrap_button "Голосование" button_type="submit" name="1" button_class="btn-primary btn-sm" %}</a>
+			<a href="{% url 'taskscat' pk='8' %}">{% bootstrap_button "Загрузка файлов" button_type="submit" name="1" button_class="btn-primary btn-sm" %}</a>
+			<a href="{% url 'taskscat' pk='9' %}">{% bootstrap_button "Прочее" button_type="submit" name="1" button_class="btn-primary btn-sm" %}</a>
+		</p>
+		<br>
+		<p>
+			<a href="{% url 'taskscat' pk='10' %}">{% bootstrap_button "Многоразовые" button_type="submit" name="1" button_class="btn-primary btn-sm" %}</a>
+			<a href="{% url 'taskscat' pk='11' %}">{% bootstrap_button "Одноразовые" button_type="submit" name="1" button_class="btn-primary btn-sm" %}</a>
+		</p>
+		
+		<br>
+		<p>
+		
+		<form method="post" action="/tasks/1/">
+			{% csrf_token %}
+			<p>
+				Стоимость задания от {{cenform}} руб.
+			</p>
+			<div id="slider"></div><br>
+			{% buttons %}
+				{% bootstrap_button "Найти" button_type="submit" button_class="btn-primary btn-sm" %}
+			{% endbuttons %}
+			</div>
+		</form>
+		</p>	
+		
+		<br>
+		<form   method="post" action="/tasks/0/">
+			{% csrf_token %}
+			<div style="width: 50%; float: left;">
+			{% bootstrap_form form %}
+			</div>
+			<div style="width: 45%; float: right; padding-top: 78px;">
+			{% buttons %}
+				{% bootstrap_button "Найти" button_type="submit" button_class="btn-primary btn-sm" %}
+			{% endbuttons %}
+			</div>
+		</form>
+		<br>
+		<br>
+		<p>
+		<a href="{% url 'taskscat' pk='12' %}">{% bootstrap_button "Новые" button_type="submit" name="1" button_class="btn-primary btn-sm" %}</a>
+		<a href="{% url 'taskscat' pk='13' %}">{% bootstrap_button "Дорогие" button_type="submit" name="1" button_class="btn-primary btn-sm" %}</a>
+		<a href="{% url 'taskscat' pk='14' %}">{% bootstrap_button "Лучшие" button_type="submit" name="1" button_class="btn-primary btn-sm" %}</a>
+		</p>
+		
+	<table class="table table-bordered table-hover">
+		<th class="span-task active">
+			<span>Название<span>
+		</th>
+		<th class="span-task active">
+			Оплата
+		</th>
+	{% if not task_one and not task_mnogo %}
+		<h4>Заданий нет</h4>
+	{% else %}
+	{%for tasks in task_one%}
+		<tr>		
+			<td><a href="{% url 'tasks_detail' pk=tasks.pk %}">{{tasks.title}}</a><br>
+			<small class="url-task">{{tasks.url_admin}}</small><br>
+			<small class="s-cat-task">№ {{tasks.id}}: {{tasks.get_cat_display}}</small>
+			</td>			
+			<td class="span-task">{{tasks.price}} руб.</td>			
+		</tr>			
+	{%endfor%}
+		{%for task in task_mnogo%}
+		<tr>		
+			<td><a href="{% url 'tasks_detail' pk=task.pk %}">{{task.title}}</a><br>
+			<small class="url-task">{{task.url_admin}}</small><br>
+			<small class="s-cat-task">№ {{task.id}}: {{task.get_cat_display}}</small>
+			</td>			
+			<td class="span-task">{{task.price}} руб.</td>			
+		</tr>			
+	{%endfor%}
+	{% endif %}
+	</table>	
+</div>
+{% endblock %}

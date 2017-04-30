@@ -1,0 +1,47 @@
+{% extends 'billtest/base.html' %}
+{% load bootstrap3 %}
+{% block content-title %}Пройдите тест{% endblock %}
+
+{% block content %}
+    <div class="post">
+		{% for test in task_s %}
+            <div class="date">
+               Дата: {{ test.pub_date }}
+            </div>
+        <h4 class="opis_tasks">№ {{ test.id}}: "{{ test.title }}"</h4>
+		<p><strong>Автор задания:</strong>
+		{{ test.user}} - id{{ test.user_id}} - <strong>цена {{ test.price_u}} руб.</strong></p>
+		<p class="opis_tasks">Пройдите тест:</p>
+        <p>{{ test.opisan|linebreaksbr }}</p>
+		<p class="opis_tasks">Ответьте на вопросы теста:</p>
+		{% for message in messages %}
+			<h4 class="list-group-item-danger">{{ message }}</h4>
+		{% endfor %}
+		<p class="quest">Вопрос №1: {{ test.quest_1}}</p>	
+		<ul>
+			<li>{{test.quest_1_ans_1}}</li>
+			<li>{{test.quest_1_ans_2}}</li>
+			<li>{{test.quest_1_ans_3}}</li>
+		</ul>
+		<p class="quest">Вопрос №2: {{ test.quest_2}}</p>	
+		<ul>
+			<li>{{test.quest_2_ans_1}}</li>
+			<li>{{test.quest_2_ans_2}}</li>
+			<li>{{test.quest_2_ans_3}}</li>
+		</ul>
+		<p class="quest">Вопрос №2: {{ test.quest_3}}</p>	
+		<ul>
+			<li>{{test.quest_3_ans_1}}</li>
+			<li>{{test.quest_3_ans_2}}</li>
+			<li>{{test.quest_3_ans_3}}</li>
+		</ul>
+		{%endfor%}
+	<form   method="post" action="">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+		{% buttons %}
+		{% bootstrap_button "Ответить" button_type="submit" button_class="btn-primary" %}
+		{% endbuttons %}
+    </form>
+    </div>
+{% endblock %}

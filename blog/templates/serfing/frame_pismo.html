@@ -1,0 +1,109 @@
+{% load staticfiles %}
+{% load bootstrap3 %}
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<!Content-Security-Policy: upgrade-insecure-requests>   
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<meta name="description" content="Описание страницы.">
+	<meta name="keywords" content="ключевые слова через запятую">
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+	<title>{% block title %}{% endblock %}</title>	
+	<link rel="shortcut icon" href="img/favicon.png" type="image/png">
+	
+	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'js/inc/TimeCircles.css' %}" rel="stylesheet">
+
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/inc/TimeCircles.js' %}"></script>
+</head>
+<body>
+<div class="iframe-serf">
+    {{ task.start_task|date:'H:i:s'  }}
+    	<div class="serf-frame">
+		<div id="DateCountdown" data-timer="{{b}}" style="width: 100%;  height: 100px"></div>
+
+			<form   class="serf-capch" method="post" action="">
+				{% csrf_token %}
+				{% bootstrap_form form %}
+				{% buttons %}
+					{% bootstrap_button "Сохранить" button_type="submit" button_class="btn-primary otv" %}
+				{% endbuttons %}
+			</form>
+
+	</div>
+	<iframe src="{{serf.url}}"     style="width: 100%; height: 700px;" name="myFrame" MARGINWIDTH="0"  frameborder="0" 	scrolling="auto" NORESIZE hspace="0" vspace="10">
+	</iframe>
+	<NOFRAMES>
+		Ваш браузер не поддерживает плавающие фреймы!
+	</NOFRAMES>
+
+
+</div>
+<script>
+$(document).ready(function(){
+$('.serf-capch').hide();
+});
+$('#DateCountdown')
+	.TimeCircles({ 
+		count_past_zero: false,
+		time: { 
+			Days: { show: false },
+			Hours: { show: false },
+			Minutes: { show: false },
+			Seconds: { text: 'Секунд' }
+		}
+	})
+	.addListener(function (unit, value, total) {
+		if (total == 0) {
+			$('#DateCountdown').hide();
+			$('.serf-capch').show();
+		}
+	});
+
+		//$("#DateCountdown").TimeCircles({start: true}); 
+	//	$("#DateCountdown").TimeCircles({ time: 
+	//	{ Days: { show: false }, 
+	//	Hours: { show: false }, 
+	//	Minutes: { show: false }}
+	//	});
+	//	$("#DateCountdown").TimeCircles({count_past_zero: false}); 
+		//$("#DateCountdown").TimeCircles({count_past_zero: true})//.end().fadeOut(); 
+		//$(".otv").click(function() {	 
+			//$("#DateCountdown").TimeCircles().end().fadeOut(); 
+		//});
+$("#DateCountdown").TimeCircles({
+    "animation": "smooth",
+    "bg_width": 0.2,
+    "fg_width": 0.03,
+    "circle_bg_color": "#90989F",
+    "time": {
+        "Days": {
+            "text": "Days",
+            "color": "#40484F",
+            "show": false
+        },
+        "Hours": {
+            "text": "Hours",
+            "color": "#40484F",
+            "show": false
+        },
+        "Minutes": {
+            "text": "Minutes",
+            "color": "#40484F",
+            "show": false
+        },
+        "Seconds": {
+            "text": "Seconds",
+            "color": "#40484F",
+            "show": true
+        }
+    }
+});
+//$("#DateCountdown").TimeCircles((callback, type = "visible")); 
+</script>
+
+</body>
+</html>
